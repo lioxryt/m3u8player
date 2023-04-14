@@ -1,59 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Reddit Video Link</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-      }
-      #player {
-        height: 100%;
-      }
-      #video {
-        height: 100%;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="player"></div>
-    <script>
-      var videoUrl = getUrlParameter("url");
-      if (videoUrl) {
-        loadVideo(videoUrl);
-      } else {
-        document.getElementById("player").innerHTML =
-          "Please provide a video URL";
-      }
+    <title>M3U8 Player</title>
+	<style>
+		body, html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			background-color: #000;
+		}
+		#player {
+			height: 100%;
+		}
+		#video {
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+	<div id="player"></div>
+	<script>
+		var videoUrl = getUrlParameter('url');
+		if(videoUrl) {
+			loadVideo(videoUrl);
+		} else {
+			document.getElementById('player').innerHTML = 'Please provide a video URL';
+		}
 
-      function loadVideo(url) {
-        if (Hls.isSupported()) {
-          var video = document.createElement("video");
-          video.id = "video";
-          video.controls = true;
-          document.getElementById("player").appendChild(video);
+		function loadVideo(url) {
+			if(Hls.isSupported()) {
+				var video = document.createElement('video');
+				video.id = 'video';
+				video.autoplay = true;
+				document.getElementById('player').appendChild(video);
 
-          var hls = new Hls();
-          hls.loadSource(url);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            video.play();
-          });
-        }
-      }
+				var hls = new Hls();
+				hls.loadSource(url);
+				hls.attachMedia(video);
+				hls.on(Hls.Events.MANIFEST_PARSED,function() {
+					video.play();
+				});
+			}
+		}
 
-      function getUrlParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-          ? ""
-          : decodeURIComponent(results[1].replace(/\+/g, " "));
-      }
-    </script>
-  </body>
+		function getUrlParameter(name) {
+			name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+			var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+			var results = regex.exec(location.search);
+			return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+		}
+	</script>
+</body>
 </html>
