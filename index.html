@@ -17,6 +17,7 @@
         width: 100%;
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   </head>
   <body>
     <div id="player"></div>
@@ -35,6 +36,12 @@
         video.autoplay = true;
         video.controls = true;
         document.getElementById('player').appendChild(video);
+
+        if(Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(url);
+          hls.attachMedia(video);
+        }
       }
 
       function getUrlParameter(name) {
